@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Conceptualization Teaching App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .expandable-content.expanded {
+            max-height: 5000px;
+            transition: max-height 0.5s ease-in;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white p-8 shadow-xl">
+        <h1 class="text-4xl font-bold mb-2">Case Conceptualization Teaching App</h1>
+        <p class="text-blue-100 text-lg">Interactive Instructor Guide • 2.5-Hour Seminar</p>
+    </div>
+
+    <!-- Timer Bar -->
+    <div class="bg-white border-b-2 border-gray-200 p-5 shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="text-3xl">⏱️</div>
+                <div>
+                    <div id="timer-display" class="text-3xl font-bold text-gray-900">0:00</div>
+                    <div class="text-xs text-gray-500 uppercase tracking-wide">Elapsed Time</div>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button id="timer-toggle" class="px-8 py-3 rounded-xl font-bold text-lg transition-all transform hover:scale-105 bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg">
+                    ▶ Start
+                </button>
+                <button id="timer-reset" class="px-8 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg">
+                    ↻ Reset
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="max-w-7xl mx-auto flex gap-6 p-6">
+        <!-- Sidebar -->
+        <div class="w-72 flex-shrink-0">
+            <div class="bg-white rounded-2xl shadow-lg p-5 sticky top-28">
+                <h3 class="font-bold text-gray-900 mb-4 text-lg">📑 Navigation</h3>
+                <nav id="nav-menu" class="space-y-2">
+                    <button class="nav-item active" data-section="overview">
+                        <div class="font-semibold">Overview</div>
+                        <div class="text-xs mt-1 opacity-75">5 min</div>
+                    </button>
+                    <button class="nav-item" data-section="lecture">
+                        <div class="font-semibold">Lecture</div>
+                        <div class="text-xs mt-1 opacity-75">30 min</div>
+                    </button>
+                    <button class="nav-item" data-section="block1">
+                        <div class="font-semibold">Block 1: Pattern</div>
+                        <div class="text-xs mt-1 opacity-75">25 min</div>
+                    </button>
+                    <button class="nav-item" data-section="block2">
+                        <div class="font-semibold">Block 2: Explanatory</div>
+                        <div class="text-xs mt-1 opacity-75">30 min</div>
+                    </button>
+                    <button class="nav-item" data-section="block3">
+                        <div class="font-semibold">Block 3: Predictive</div>
+                        <div class="text-xs mt-1 opacity-75">30 min</div>
+                    </button>
+                    <button class="nav-item" data-section="block4">
+                        <div class="font-semibold">Block 4: Culture</div>
+                        <div class="text-xs mt-1 opacity-75">25 min</div>
+                    </button>
+                    <button class="nav-item" data-section="block5">
+                        <div class="font-semibold">Block 5: Application</div>
+                        <div class="text-xs mt-1 opacity-75">10 min</div>
+                    </button>
+                    <button class="nav-item" data-section="resources">
+                        <div class="font-semibold">Resources</div>
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="flex-1">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <!-- Overview Section -->
+                <div id="overview" class="content-section active">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-3">Case Conceptualization Seminar</h2>
+                    <p class="text-xl text-gray-600 mb-8">Mastering Sperry & Sperry's Integrative Model</p>
+                    
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-6 mb-8">
+                        <h3 class="font-bold text-blue-900 mb-3">MetaArchitect Framework</h3>
+                        <div class="font-mono text-sm space-y-1 text-gray-700">
+                            <div>[2×2: Etic-person in Emic-space → Students entering authors' world]</div>
+                            <div>[7×3: Narrative-World – Emic → Transitional]</div>
+                            <div>[MDHC: T=Experiential, S=Emic→Transitional, M=Toward-Justice]</div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-6">
+                            <h4 class="font-bold text-lg mb-4 text-gray-900">Learning Objectives</h4>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li>✓ Understand explanatory + predictive power</li>
+                                <li>✓ Master 4 components and 17 elements</li>
+                                <li>✓ Identify maladaptive patterns</li>
+                                <li>✓ Build comprehensive conceptualizations</li>
+                                <li>✓ Integrate cultural and justice dimensions</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-6">
+                            <h4 class="font-bold text-lg mb-4 text-gray-900">Session Structure</h4>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li><strong>30 min:</strong> Lecture</li>
+                                <li><strong>25 min:</strong> Block 1 - Pattern</li>
+                                <li><strong>30 min:</strong> Block 2 - Explanatory</li>
+                                <li><strong>30 min:</strong> Block 3 - Predictive</li>
+                                <li><strong>25 min:</strong> Block 4 - Culture</li>
+                                <li><strong>10 min:</strong> Block 5 - Application</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r mb-4">
+                        <div class="flex items-start gap-2">
+                            <span class="text-lg">⚠️</span>
+                            <div class="text-sm">
+                                <strong>Pre-Class Prep:</strong> Print Tables 1.2 & 1.3, all 5 case backgrounds, clinical formulation template, and Geri's three versions.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl p-6">
+                        <h4 class="font-bold text-lg text-purple-900 mb-2">Core Teaching Principle</h4>
+                        <p class="text-sm text-gray-700 italic">
+                            "This session prioritizes <strong>emic immersion</strong>—helping students temporarily set aside their own frameworks to fully inhabit Sperry & Sperry's integrative model."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Lecture Section -->
+                <div id="lecture" class="content-section">
+                    <h2 class="text-3xl font-bold mb-6">LECTURE (30 Minutes)</h2>
+                    
+                    <div class="border border-gray-200 rounded-lg mb-4 overflow-hidden">
+                        <button class="expandable-trigger w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100">
+                            <span class="font-semibold">I. Opening: The Authors' Core Question (3 min)</span>
+                            <span class="expand-icon">▶</span>
+                        </button>
+                        <div class="expandable-content p-4 bg-white border-t">
+                            <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                                <h5 class="font-bold mb-2">Instructor Script:</h5>
+                                <p class="text-sm mb-3 italic">
+                                    "Sperry & Sperry begin with: <strong>How do we move from description to explanation and prediction?</strong> Case conceptualization is a <strong>'bridge'</strong> connecting assessment to outcomes."
+                                </p>
+                                <p class="text-sm mb-2">Two powers:</p>
+                                <ul class="text-sm list-decimal pl-5 space-y-1">
+                                    <li><strong>Explanatory Power:</strong> Can you explain WHY?</li>
+                                    <li><strong>Predictive Power:</strong> Can you anticipate WHAT obstacles?</li>
+                                </ul>
+                            </div>
+                            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-3 rounded-r">
+                                <span class="text-lg">💡</span>
+                                <strong class="text-sm"> Tip:</strong>
+                                <span class="text-sm"> Write these two powers on board and refer throughout.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg mb-4 overflow-hidden">
+                        <button class="expandable-trigger w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100">
+                            <span class="font-semibold">II. Three Versions Exercise (10 min)</span>
+                            <span class="expand-icon">▶</span>
+                        </button>
+                        <div class="expandable-content p-4 bg-white border-t">
+                            <div class="bg-red-50 border-l-4 border-red-500 p-3 rounded-r mb-4">
+                                <strong>DISPLAY:</strong> Show all three Geri versions. Give 3-4 min to read.
+                            </div>
+                            <div class="space-y-3">
+                                <div class="border-l-4 border-red-500 pl-4 bg-red-50 p-3 rounded-r">
+                                    <h5 class="font-bold text-red-900">Version 1: Case Summary</h5>
+                                    <p class="text-sm">No explanatory or predictive power</p>
+                                </div>
+                                <div class="border-l-4 border-amber-500 pl-4 bg-amber-50 p-3 rounded-r">
+                                    <h5 class="font-bold text-amber-900">Version 2: Moderate</h5>
+                                    <p class="text-sm">Good explanation, weak prediction</p>
+                                </div>
+                                <div class="border-l-4 border-emerald-500 pl-4 bg-emerald-50 p-3 rounded-r">
+                                    <h5 class="font-bold text-emerald-900">Version 3: Gold Standard</h5>
+                                    <p class="text-sm">All 17 elements—both powers present</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg mb-4 overflow-hidden">
+                        <button class="expandable-trigger w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100">
+                            <span class="font-semibold">III. Four Components, 17 Elements (12 min)</span>
+                            <span class="expand-icon">▶</span>
+                        </button>
+                        <div class="expandable-content p-4 bg-white border-t">
+                            <div class="grid gap-4">
+                                <div class="bg-purple-50 border-2 border-purple-300 rounded-lg p-4">
+                                    <h4 class="font-bold text-purple-900">1. DIAGNOSTIC ("What?")</h4>
+                                    <ul class="text-sm mt-2 space-y-1">
+                                        <li>• Presentation</li>
+                                        <li>• Precipitant</li>
+                                        <li>• Pattern ← CENTRAL</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-blue-50 border-2 border-blue-300 rounded-lg p-4">
+                                    <h4 class="font-bold text-blue-900">2. CLINICAL ("Why?")</h4>
+                                    <ul class="text-sm mt-2 space-y-1">
+                                        <li>• Predisposition</li>
+                                        <li>• Perpetuants</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-emerald-50 border-2 border-emerald-300 rounded-lg p-4">
+                                    <h4 class="font-bold text-emerald-900">3. CULTURAL ("Culture?")</h4>
+                                    <ul class="text-sm mt-2 space-y-1">
+                                        <li>• Identity</li>
+                                        <li>• Acculturation</li>
+                                        <li>• Explanation</li>
+                                        <li>• Culture v. Personality</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-orange-50 border-2 border-orange-300 rounded-lg p-4">
+                                    <h4 class="font-bold text-orange-900">4. TREATMENT ("How?")</h4>
+                                    <p class="text-sm mt-1">8 elements: Goals, Focus, Strategy, Interventions, Obstacles, Cultural, Prognosis</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 1 Section -->
+                <div id="block1" class="content-section">
+                    <h2 class="text-3xl font-bold mb-6">BLOCK 1: Understanding Pattern (25 min)</h2>
+                    
+                    <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r mb-6">
+                        <strong>Goal:</strong> Students must grasp "pattern" as organizing principle. Budget extra time if needed.
+                    </div>
+
+                    <div class="bg-white border-2 border-purple-200 rounded-xl p-6 mb-6">
+                        <h4 class="text-lg font-bold text-purple-900 mb-4">Q1.1: What is "pattern"?</h4>
+                        
+                        <div class="border border-gray-200 rounded-lg mb-3">
+                            <button class="expandable-trigger w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100">
+                                <span class="font-semibold text-sm">Guidance</span>
+                                <span class="expand-icon text-sm">▶</span>
+                            </button>
+                            <div class="expandable-content expanded p-3 bg-white border-t">
+                                <p class="text-sm">Let students struggle. Guide: <strong>"Inflexible, ineffective way of perceiving, thinking, acting"</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg">
+                            <button class="expandable-trigger w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100">
+                                <span class="font-semibold text-sm">Model Answers</span>
+                                <span class="expand-icon text-sm">▶</span>
+                            </button>
+                            <div class="expandable-content p-3 bg-white border-t">
+                                <ul class="text-sm space-y-1">
+                                    <li>• Pattern is ORGANIZING PRINCIPLE</li>
+                                    <li>• Both maladaptive and treatment</li>
+                                    <li>• Shows across contexts</li>
+                                    <li>• Example: Geri = conditional relating + avoidance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-4">
+                        <strong>Summary:</strong> Diagnosis = descriptive; Pattern = explanatory (internal logic)
+                    </div>
+                </div>
+
+                <!-- Block 2 Section -->
+                <div id="block2" class="content-section">
+                    <h2 class="text-3xl font-bold mb-6">BLOCK 2: Explanatory Power (30 min)</h2>
+                    
+                    <div class="bg-gray-100 p-6 rounded-lg my-6">
+                        <div class="text-center font-mono text-sm space-y-2">
+                            <div>PREDISPOSITION</div>
+                            <div class="text-2xl">↓</div>
+                            <div>PATTERN</div>
+                            <div class="text-2xl">↓</div>
+                            <div>PRECIPITANT</div>
+                            <div class="text-2xl">↓</div>
+                            <div>PRESENTATION</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 border-2 border-amber-400 rounded-xl p-6">
+                        <h4 class="font-bold text-lg mb-3">📝 PRACTICE (10 min)</h4>
+                        <div class="bg-white p-4 rounded border font-mono text-sm space-y-2">
+                            <div>[Symptoms] reaction to [precipitant],</div>
+                            <div>given pattern of [maladaptive].</div>
+                            <div>Pattern from [predisposition].</div>
+                            <div>Maintained by [perpetuants].</div>
+                        </div>
+                        <p class="text-sm mt-3"><strong>Pair work:</strong> Assign cases, draft formulation</p>
+                    </div>
+                </div>
+
+                <!-- Block 3 Section -->
+                <div id="block3" class="content-section">
+                    <h2 class="text-3xl font-bold mb-6">BLOCK 3: Predictive Power (30 min)</h2>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                        <p class="text-sm font-semibold">
+                            "If pattern understood → predict how it shows up <strong>in therapy</strong>"
+                        </p>
+                    </div>
+
+                    <div class="bg-purple-50 border-2 border-purple-400 rounded-xl p-6">
+                        <h4 class="font-bold mb-3">Treatment Focus Examples</h4>
+                        <div class="space-y-2">
+                            <div class="bg-white p-3 rounded"><strong>Antwone:</strong> Fight-flight → regulation + attachment</div>
+                            <div class="bg-white p-3 rounded"><strong>Richard:</strong> Grandiosity → accountability</div>
+                            <div class="bg-white p-3 rounded"><strong>Maria:</strong> Paralysis → bicultural agency</div>
+                            <div class="bg-white p-3 rounded"><strong>Joan:</strong> Perfectionism → self-compassion</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 4 Section -->
+                <div id="block4" class="content-section">
+                    <h2 class="text-3xl font-bold mb-6">BLOCK 4: Culture & Justice (25 min)</h2>
+                    
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r mb-6">
+                        <p class="text-sm font-semibold">
+                            "Must <strong>assess culture to determine relevance</strong>. 'Acculturated = not relevant' is assumption, not evidence."
+                        </p>
+                    </div>
+
+                    <div class="bg-amber-50 border-2 border-amber-400 rounded-xl p-6">
+                        <h4 class="font-bold mb-3">Maria Case (Culture-Primary)</h4>
+                        <div class="bg-white p-4 rounded">
+                            <ul class="text-sm space-y-1">
+                                <li>• First-gen Mexican American</li>
+                                <li>• Family obligation vs. college</li>
+                                <li>• "Good daughter" script</li>
+                                <li>• Cultural explanation: faith</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 5 Section -->
+                <div id="block5" class="content-section">
+                    <h2 class="text-3xl font-bold mb-6">BLOCK 5: Application (10 min)</h2>
+                    
+                    <div class="bg-purple-50 border-2 border-purple-400 rounded-xl p-6">
+                        <h3 class="font-bold text-lg mb-3">🎯 RAPID CASE: Antwone</h3>
+                        <div class="bg-white p-4 rounded mb-4">
+                            <p class="text-sm">Navy seaman, anger issues, childhood abuse, friend shot. When told 3-session limit: "Everyone abandons me!"</p>
+                        </div>
+                        <div class="bg-amber-100 p-4 rounded">
+                            <p class="font-bold mb-2">TASK (8 min pairs):</p>
+                            <div class="text-sm space-y-1">
+                                <div>1. Pattern (one sentence)</div>
+                                <div>2. Predisposition (top 3)</div>
+                                <div>3. Precipitant</div>
+                                <div>4. Treatment Focus</div>
+                                <div>5. One Obstacle</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Section -->
+                <div id="resources" class="content-section">
+                    <h2 class="text-3xl font-bold mb-6">Teaching Resources</h2>
+                    
+                    <div class="border border-gray-200 rounded-lg mb-4">
+                        <button class="expandable-trigger w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100">
+                            <span class="font-semibold">Case 1: Geri (35, African American)</span>
+                            <span class="expand-icon">▶</span>
+                        </button>
+                        <div class="expandable-content expanded p-4 bg-white border-t">
+                            <div class="bg-blue-50 p-4 rounded">
+                                <p class="text-sm whitespace-pre-line">35, admin assistant, depressed 3 weeks.
+
+PRECIPITANT: Promotion to new team
+PATTERN: Avoidance when criticized; conditional relating
+HISTORY: Critical parents, peer teasing, one friend</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg mb-4">
+                        <button class="expandable-trigger w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100">
+                            <span class="font-semibold">Case 2: Antwone (Mid-20s, African American)</span>
+                            <span class="expand-icon">▶</span>
+                        </button>
+                        <div class="expandable-content p-4 bg-white border-t">
+                            <div class="bg-blue-50 p-4 rounded">
+                                <p class="text-sm whitespace-pre-line">Navy seaman, anger issues.
+
+PRECIPITANT: Racial provocation
+PATTERN: Hypervigilance + explosive reactivity
+TRAUMA: Father murdered, mother prison, foster abuse, friend shot</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg mb-4">
+                        <button class="expandable-trigger w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100">
+                            <span class="font-semibold">Quick Reference: Four Questions</span>
+                            <span class="expand-icon">▶</span>
+                        </button>
+                        <div class="expandable-content p-4 bg-white border-t">
+                            <div class="grid gap-3">
+                                <div class="bg-purple-100 p-3 rounded">
+                                    <strong>1. DIAGNOSTIC:</strong> What? (Presentation, Precipitant, Pattern)
+                                </div>
+                                <div class="bg-blue-100 p-3 rounded">
+                                    <strong>2. CLINICAL:</strong> Why? (Predisposition, Perpetuants)
+                                </div>
+                                <div class="bg-emerald-100 p-3 rounded">
+                                    <strong>3. CULTURAL:</strong> Culture's role? (4 elements)
+                                </div>
+                                <div class="bg-orange-100 p-3 rounded">
+                                    <strong>4. TREATMENT:</strong> How change? (8 elements)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        let seconds = 0;
+        let timerInterval = null;
+        let isRunning = false;
+
+        const timerDisplay = document.getElementById('timer-display');
+        const timerToggle = document.getElementById('timer-toggle');
+        const timerReset = document.getElementById('timer-reset');
+
+        function formatTime(secs) {
+            const mins = Math.floor(secs / 60);
+            const s = secs % 60;
+            return `${mins}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function updateDisplay() {
+            timerDisplay.textContent = formatTime(seconds);
+        }
+
+        timerToggle.addEventListener('click', () => {
+            if (isRunning) {
+                clearInterval(timerInterval);
+                timerToggle.innerHTML = '▶ Start';
+                timerToggle.className = 'px-8 py-3 rounded-xl font-bold text-lg transition-all transform hover:scale-105 bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg';
+            } else {
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    updateDisplay();
+                }, 1000);
+                timerToggle.innerHTML = '⏸ Pause';
+                timerToggle.className = 'px-8 py-3 rounded-xl font-bold text-lg transition-all transform hover:scale-105 bg-red-500 hover:bg-red-600 text-white shadow-lg';
+            }
+            isRunning = !isRunning;
+        });
+
+        timerReset.addEventListener('click', () => {
+            seconds = 0;
+            updateDisplay();
+        });
+
+        // Navigation
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.content-section');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetSection = item.dataset.section;
+                
+                // Update active nav
+                navItems.forEach(n => n.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Show target section
+                sections.forEach(s => s.classList.remove('active'));
+                document.getElementById(targetSection).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Expandable sections
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.expandable-trigger')) {
+                const trigger = e.target.closest('.expandable-trigger');
+                const content = trigger.nextElementSibling;
+                const icon = trigger.querySelector('.expand-icon');
+                
+                content.classList.toggle('expanded');
+                icon.textContent = content.classList.contains('expanded') ? '▼' : '▶';
+            }
+        });
+
+        // Style for nav items
+        const style = document.createElement('style');
+        style.textContent = `
+            .nav-item {
+                width: 100%;
+                text-align: left;
+                padding: 0.75rem 1rem;
+                border-radius: 0.5rem;
+                transition: all 0.2s;
+                background: white;
+                color: #374151;
+            }
+            .nav-item:hover {
+                background: #f3f4f6;
+            }
+            .nav-item.active {
+                background: #2563eb;
+                color: white;
+                font-weight: 600;
+                box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
